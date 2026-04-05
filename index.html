@@ -896,30 +896,33 @@
     width: 100%;
   }
 
-  /* Padding-bottom trick: forces square regardless of browser/zoom */
+  /* Cards — fixed tall height, not square, so content fits on all screens */
   .landing-card {
     position: relative;
     text-decoration: none;
     border: 1.5px solid;
-    overflow: hidden;
+    overflow: visible;
     transition: box-shadow 0.3s ease, transform 0.3s ease;
+    min-height: 380px;
   }
 
-  /* The padding-bottom square trick */
+  /* Remove the padding-bottom square trick */
   .landing-card::before {
-    content: '';
-    display: block;
-    padding-bottom: 100%;
+    display: none;
   }
 
-  /* All card content positioned over the ::before spacer */
+  /* All card content in normal flow */
   .landing-card-inner {
-    position: absolute;
-    inset: 0;
-    padding: 32px;
+    position: relative;
+    inset: auto;
+    padding: 36px 32px 32px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    min-height: 380px;
+    overflow: hidden;
+    border: inherit;
+    background: inherit;
   }
 
   .landing-card:hover {
@@ -960,7 +963,7 @@
 
   .lc-num {
     font-family: var(--da-serif);
-    font-size: clamp(56px, 7vw, 88px);
+    font-size: clamp(64px, 8vw, 100px);
     font-weight: 700;
     line-height: 1;
     position: absolute;
@@ -971,40 +974,40 @@
 
   .lc-tag {
     font-family: var(--mono);
-    font-size: 9px;
+    font-size: 11px;
     letter-spacing: .18em;
     text-transform: uppercase;
-    margin-bottom: 10px;
+    margin-bottom: 14px;
   }
 
   .lc-title {
     font-family: var(--da-serif);
-    font-size: clamp(22px, 2.4vw, 36px);
+    font-size: clamp(32px, 3vw, 48px);
     font-weight: 700;
     line-height: 1.05;
-    margin-bottom: 10px;
+    margin-bottom: 14px;
   }
 
   .lc-desc {
-    font-size: 12px;
+    font-size: 15px;
     line-height: 1.7;
     flex: 1;
   }
 
   .lc-meta {
     display: flex;
-    gap: 6px;
+    gap: 8px;
     flex-wrap: wrap;
-    margin-top: 12px;
+    margin-top: 20px;
   }
 
   .lc-meta span {
     font-family: var(--mono);
-    font-size: 8px;
+    font-size: 10px;
     letter-spacing: .07em;
     text-transform: uppercase;
     border: 1px solid;
-    padding: 2px 8px;
+    padding: 4px 12px;
   }
 
   .lc-body {
@@ -1017,8 +1020,8 @@
 
   .lc-arrow {
     position: absolute;
-    bottom: 0;
-    right: 0;
+    bottom: 28px;
+    right: 28px;
     transition: transform 0.3s;
   }
 
@@ -1030,9 +1033,7 @@
   }
   @media (max-width: 600px) {
     .landing-cards { grid-template-columns: 1fr; gap: 12px; }
-    #landing { padding: 0 24px 40px; }
-    #landing > div:first-of-type { padding: 40px 24px 32px; }
-    #landing > div:last-of-type { padding: 0 24px 40px; }
+    .landing-card, .landing-card-inner { min-height: 280px; }
   }
 
 
@@ -2978,7 +2979,7 @@
   <div class="footer-right">
     <span style="display:flex;align-items:center;gap:8px;">
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><rect x="2" y="4" width="20" height="16" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M2 7l10 7 10-7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-      
+      <span id="em"></span>
     </span>
     <a href="https://linkedin.com/in/taruna-aiyyar" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:8px;">
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="3" stroke="currentColor" stroke-width="1.5"/><path d="M7 10v7M7 7v.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M11 17v-4a3 3 0 0 1 6 0v4M11 10v7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
@@ -2986,6 +2987,12 @@
     </a>
   </div>
 </footer>
+<script>
+  // Email rendered at runtime — split so no scanner can detect it
+  var p=['t','a','r','u','n','a','.','r','.','a','i','y','y','a','r',String.fromCharCode(64),'g','m','a','i','l','.','c','o','m'];
+  var el=document.getElementById('em');
+  if(el) el.textContent=p.join('');
+</script>
 
 <script>
   function showView(view) {
