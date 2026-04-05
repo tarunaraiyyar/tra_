@@ -1732,16 +1732,10 @@
     color: var(--brown-light);
   }
 
-  /* Scroll-in animation for cards panel */
+  /* Cards panel always visible */
   .cards-panel {
-    opacity: 0;
-    transform: translateY(40px);
-    transition: opacity 0.8s ease, transform 0.8s ease;
-  }
-
-  .cards-panel.visible {
     opacity: 1;
-    transform: translateY(0);
+    transform: none;
   }
 
   @media (max-width: 768px) {
@@ -3025,17 +3019,7 @@
     }
   }
 
-  function initCardsObserver() {
-    var panel = document.getElementById('cards-panel');
-    if (!panel) return;
-    panel.classList.remove('visible');
-    var obs = new IntersectionObserver(function(entries) {
-      entries.forEach(function(entry) {
-        if (entry.isIntersecting) panel.classList.add('visible');
-      });
-    }, { threshold: 0.12 });
-    obs.observe(panel);
-  }
+  function initCardsObserver() { /* no-op */ }
 
   // Scroll-driven fade bridge — handled by pure CSS sticky gradient
 
